@@ -26,7 +26,6 @@ void preorder(tree *t)
 		preorder(t->left);
 		preorder(t->right);
 	}
-
 }
 void inorder(tree *t)
 {
@@ -35,8 +34,7 @@ void inorder(tree *t)
 		inorder(t->left);
 		printf("%d->",t->data);
 		inorder(t->right);
-	}
-	
+	}	
 }
 void postorder(tree *t)
 {
@@ -46,8 +44,48 @@ void postorder(tree *t)
 		postorder(t->right);
 		printf("%d->",t->data);
 	}
-
 }
+
+int numberOfNodes(tree *root)
+{
+	if(root == NULL)
+	return 0;
+	else if(root->left == NULL && root->right==NULL)
+	return 1;
+	else
+	return 1+numberOfNodes(root->left)+numberOfNodes(root->right);
+}
+
+int numberOfLeafNodes(tree *root)
+{
+	if(root == NULL)
+	return 0;
+	else if(root->left == NULL && root->right==NULL)
+	return 1;
+	else
+	return numberOfLeafNodes(root->left)+numberOfLeafNodes(root->right);
+}
+int numberOfNonLeafNodes(tree *root)
+{
+	if(root == NULL)
+	return 0;
+	else if(root->left != NULL || root->right !=NULL)
+	return 1+numberOfNonLeafNodes(root->left)+numberOfNonLeafNodes(root->right);
+	else
+	return 0;
+}
+
+int numberOfFullNodes(tree *root)
+{
+	if(root == NULL)
+	return 0;
+	else if(root->left != NULL && root->right!=NULL)
+	return 1+numberOfFullNodes(root->left)+numberOfFullNodes(root->right);
+	else
+	return numberOfFullNodes(root->left)+numberOfFullNodes(root->right);
+		
+}
+
 int main()
 {
 	tree *t;
@@ -63,5 +101,14 @@ int main()
 	inorder(t);
 	printf("\n");
 	postorder(t);
+	printf("\n");
+	int nodesCount = numberOfNodes(t);
+	printf("Number of nodes are = %d",nodesCount);
+	int leafNodesCount = numberOfLeafNodes(t);
+	printf("\n Number of leaf nodes are = %d",leafNodesCount);
+	int nonLeafNodesCount = numberOfNonLeafNodes(t);
+	printf("\n Number of non leaf nodes are = %d",nonLeafNodesCount);
+	int fullNodesCount = numberOfFullNodes(t);
+	printf("\n Number of full nodes are = %d",fullNodesCount);
 	return 0;
 }
