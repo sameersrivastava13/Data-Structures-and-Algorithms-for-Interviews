@@ -86,6 +86,46 @@ int numberOfFullNodes(tree *root)
 		
 }
 
+int height(tree *root)
+{
+	if(root == NULL)
+	return 0;
+	else if(root->left == NULL && root->right == NULL)
+	return 0;
+	else
+	{
+		int hl = height(root->left);
+		int hr = height(root->right);
+		if(hl>hr)
+		return 1+hl;
+		return 1+hr;
+	}
+}
+
+void printLevel(tree *t, int level)
+{
+	if(t == NULL)
+	return;
+	if(level==0)
+	printf("%d->",t->data);
+	else if(level>=1)
+	{
+	
+	printLevel(t->left,level-1);
+	printLevel(t->right,level-1);
+	}
+}
+
+void levelOrder(tree *root)
+{
+	int h = height(root);
+	int i;
+	for(i=0;i<=h;i++)
+	{
+		printLevel(root, i);
+	}
+}
+
 int main()
 {
 	tree *t;
@@ -110,5 +150,8 @@ int main()
 	printf("\n Number of non leaf nodes are = %d",nonLeafNodesCount);
 	int fullNodesCount = numberOfFullNodes(t);
 	printf("\n Number of full nodes are = %d",fullNodesCount);
+	printf("\n Height of the tree = %d",height(t));
+	printf("\n level order traversal of the tree = \n");
+	levelOrder(t);
 	return 0;
 }
